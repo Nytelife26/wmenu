@@ -90,6 +90,7 @@
 								cargo-edit
 								cargo-semver-checks
 								cargo-watch
+								cargo-show-asm
 								rust-analyzer
 								bacon
 							];
