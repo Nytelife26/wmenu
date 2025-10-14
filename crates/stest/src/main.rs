@@ -2,6 +2,7 @@ use std::{
 	cmp::{Ordering, PartialOrd},
 	ffi::OsStr,
 	fs::{FileType, Metadata},
+	io,
 	os::unix::fs::{FileTypeExt, MetadataExt},
 	path::Path,
 	process::exit,
@@ -22,15 +23,15 @@ impl File {
 		File { path }
 	}
 
-	fn meta(&self) -> std::io::Result<Metadata> {
+	fn meta(&self) -> io::Result<Metadata> {
 		self.path.metadata()
 	}
 
-	fn file_type(&self) -> std::io::Result<FileType> {
+	fn file_type(&self) -> io::Result<FileType> {
 		self.meta().map(|meta| meta.file_type())
 	}
 
-	fn mode(&self) -> std::io::Result<u32> {
+	fn mode(&self) -> io::Result<u32> {
 		self.meta().map(|meta| meta.mode())
 	}
 
@@ -57,7 +58,6 @@ impl File {
 	}
 
 	fn is_file(&self) -> bool {
-		println!("found {:?}", self.meta());
 		self.path.is_file()
 	}
 
@@ -193,7 +193,7 @@ fn main() {
 
 	if paths.is_empty() {
 		let mut line = String::with_capacity(128);
-		let stdin = std::io::stdin();
+		let stdin = io::stdin();
 		while let Ok(len) = stdin.read_line(&mut line) {
 			if len == 0 || line == "\n" {
 				break;
