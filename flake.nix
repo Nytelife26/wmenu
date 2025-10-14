@@ -46,16 +46,19 @@
 							src = ./.;
 							hooks = {
 								convco.enable = true;
-								alejandra = {
-									enable = true;
-									package = pkgs.alejandra;
-								};
+								alejandra.enable = true;
 								statix = {
 									enable = true;
 									settings.ignore = ["/.direnv"];
 								};
-								clippy.enable = true;
-								rustfmt.enable = true;
+								clippy = {
+									enable = true;
+									package = fenix.packages.${pkgs.system}.stable.clippy;
+								};
+								rustfmt = {
+									enable = true;
+									package = fenix.packages.${pkgs.system}.default.rustfmt;
+								};
 							};
 						};
 				});
